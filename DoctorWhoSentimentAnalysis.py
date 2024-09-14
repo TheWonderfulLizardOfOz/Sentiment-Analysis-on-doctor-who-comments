@@ -82,26 +82,3 @@ def analyseComments():
             analysedComments.append(c)
         df = pd.DataFrame(analysedComments, columns =['Episode', 'Negative', "Neutral", "Positive"])
         df.to_csv("analysedEpisodes.csv")
-
-def changeDataOrientation():
-    arr = pd.read_csv("analysedEpisodesDupe.csv").values
-    episodes = []
-    negative = []
-    neutral = []
-    positive = []
-
-    for a in arr:
-        episodes.append(a[1])
-        negative.append(a[2])
-        neutral.append(a[3])
-        positive.append(a[4])
-
-    df = pd.DataFrame({
-        "Episode": episodes,
-        "Negative": negative,
-        "Neutral": neutral,
-        "Positive": positive
-    })
-    df.to_csv("analysedEpisodes.csv")
-
-changeDataOrientation()
