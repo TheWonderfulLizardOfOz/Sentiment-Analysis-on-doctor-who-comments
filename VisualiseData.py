@@ -12,7 +12,7 @@ def boxPlotPerEpisode(sentiment = "Positive"):
     plt.figure(figsize=(40, 10))
     plt.boxplot(data, positions=positions)
     plt.xticks(positions, negativeByEpisode.index)  # Set x-tick labels to episode names
-    plt.xlabel(sentiment)
+    plt.xlabel("Episode")
     plt.ylabel('{} Sentiment'.format(sentiment))
     plt.title('Boxplot of {} Sentiment per Episode'.format(sentiment))
     plt.tight_layout()
@@ -33,7 +33,6 @@ def plotSentimentPerEpisode(sentiment = "positive"):
     episodes = df.groupby('Episode')["Sentiment"].apply(list)
     portions = []
     for e in episodes.index:
-        print(int(e[0:-3] + e[-2::]))
         portions.append(portionSentiment(e, sentiment))
     plt.figure(figsize=(40, 10))
     plt.plot(episodes.index, portions, linestyle='--', marker='o')
@@ -48,7 +47,7 @@ def portionSentiment(episode, sentiment):
     return episodes[episode].count(sentiment)/len(episodes[episode])
 
 #Sentiments: Positive, Neutral, Negative
-#boxPlotPerEpisode("Positive")
+boxPlotPerEpisode("Positive")
 
 #sentimentPieChart("12x03")
 plotSentimentPerEpisode("negative")
