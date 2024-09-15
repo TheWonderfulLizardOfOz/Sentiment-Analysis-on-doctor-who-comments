@@ -67,7 +67,6 @@ def setDiscussions():
     file.close()
 
 def analyseComments():
-    analysedEpisodes = {}
     with open('episodes.json', 'r') as file:
         episodes = json.load(file)
     analysedComments = []

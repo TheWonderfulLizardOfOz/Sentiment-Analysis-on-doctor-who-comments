@@ -1,7 +1,8 @@
 import pandas as pd
 def modifyCSV():
     arr = pd.read_csv("analysedEpisodesDupe.csv").values
-    episodes = []
+    series = []
+    episode = []
     negative = []
     neutral = []
     positive = []
@@ -9,11 +10,14 @@ def modifyCSV():
 
     for a in arr:
         if int(a[0][0:-3]) < 10 and int(a[0][0:-3]) != 1:
-            episodes.append("0" + a[0])
+            series.append("0" + str(a[0][0:-3]))
+            episode.append(a[0][-2::])
         elif int(a[0][0:-3]) == 1:
-            episodes.append("14" + a[0][-3::])
+            series.append("14")
+            episode.append(a[0][-2::])
         else:
-            episodes.append(a[0])
+            series.append(a[0][0:-3])
+            episode.append(a[0][-2::])
         negative.append(a[1])
         neutral.append(a[2])
         positive.append(a[3])
@@ -25,7 +29,8 @@ def modifyCSV():
             sentiment.append("positive")
 
     df = pd.DataFrame({
-        "Episode": episodes,
+        "Series": series,
+        "Episode": episode,
         "Negative": negative,
         "Neutral": neutral,
         "Positive": positive,
