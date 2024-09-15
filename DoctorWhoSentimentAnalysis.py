@@ -23,6 +23,7 @@ reddit = praw.Reddit(
 
 doctorWho = reddit.subreddit("DoctorWho")
 def setDiscussions():
+    episodes = {}
     file = open("discussionThreads.txt", "w")
     searchRange = [1] + [i for i in range(8, 14)]
     results = set()
