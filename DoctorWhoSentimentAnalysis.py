@@ -71,7 +71,6 @@ def analyseComments():
         episodes = json.load(file)
     analysedComments = []
     for episode in episodes:
-        print(episode)
         series = episode[0:-3]
         # [series, episode number, negative, neutral, positive]
         for comment in episodes[episode]:
@@ -88,5 +87,4 @@ def analyseComments():
                 c.append("positive")
             analysedComments.append(c)
         df = pd.DataFrame(analysedComments, columns =['Series', 'Episode', 'Negative', "Neutral", "Positive", 'Sentiment'])
-        print(df)
         df.to_csv("analysedEpisodes.csv", index=False)
