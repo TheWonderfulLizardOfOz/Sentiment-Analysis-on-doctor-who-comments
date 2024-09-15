@@ -72,13 +72,21 @@ def analyseComments():
     analysedComments = []
     for episode in episodes:
         print(episode)
-        # [episode name, negative, neutral, positive]
+        series = episode[0:-3]
+        # [series, episode number, negative, neutral, positive]
         for comment in episodes[episode]:
             encodedInput = tokenizer(comment, truncation=True, max_length=512, return_tensors='pt')
             output = model(**encodedInput)
             scores = output[0][0].detach().numpy()
             scores = softmax(scores)
-            c = [episode] + list(scores)
+            c = [series, episode[-2::]] + list(scores)
+            if scores[0] > scores[1] and scores[0] > scores[2]:
+                c.append("negative")
+            elif scores[1] > scores[2]:
+                c.append("neutral")
+            else:
+                c.append("positive")
             analysedComments.append(c)
-        df = pd.DataFrame(analysedComments, columns =['Episode', 'Negative', "Neutral", "Positive"])
-        df.to_csv("analysedEpisodes.csv")
+        df = pd.DataFrame(analysedComments, columns =['Series', 'Episode', 'Negative', "Neutral", "Positive", 'Sentiment'])
+        print(df)
+        df.to_csv("analysedEpisodes.csv", index=False)
